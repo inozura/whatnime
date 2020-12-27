@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Fade from "react-reveal/Fade";
 
 import Back from "../../components/ButtonBack";
@@ -6,6 +6,10 @@ import Footer from "../../parts/Footer";
 import "./About.scss";
 
 export default function About() {
+  useEffect(() => {
+    document.title = "About";
+  });
+
   return (
     <div className="about-page">
       <div className="main-page">

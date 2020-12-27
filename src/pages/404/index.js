@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./404.scss";
 
 export default function NotFound() {
+  useEffect(() => {
+    document.title = "Not Found";
+  });
+
   return (
     <div className="pagenotfound">
       <div className="notfound">

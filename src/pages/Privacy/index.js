@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Fade from "react-reveal/Fade";
 
 import Back from "../../components/ButtonBack";
@@ -7,6 +7,10 @@ import Footer from "../../parts/Footer";
 import "./Privacy.scss";
 
 export default function Privacy() {
+  useEffect(() => {
+    document.title = "Privacy Policy";
+  });
+
   return (
     <div className="main-police">
       <div className="privacy-police">
