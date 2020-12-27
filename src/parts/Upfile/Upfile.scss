@@ -1,0 +1,55 @@
+section.upfile {
+  position: relative;
+  padding: 100px 0 50px 0;
+  overflow: hidden;
+  .bg-wave {
+    position: absolute;
+    display: none;
+  }
+    
+  .img-anime {
+    overflow: hidden;
+    width: 91%;
+    max-width: 250px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+  }
+
+  .card.upfile {
+    height: auto;
+    box-sizing: border-box;
+    border: unset !important;
+    box-shadow: 0 14px 30px rgba(103,132,187,.15),0 4px 4px rgba(103,132,187,.05);
+  }
+
+  .row {
+    background-image: radial-gradient(circle,rgba(0, 68, 255, 0.452) ,rgba(221, 113, 113, 0.5));
+    border-radius: 3px;
+    padding: 50px 50px;
+    box-shadow: 0 14px 30px rgba(103,132,187,.15),0 4px 4px rgba(103,132,187,.05);
+  }
+}
+
+@media (max-width: 768px) {
+  section.upfile {
+    .img-anime {
+      display: none;
+    }
+
+    .row {
+      padding: 40px 20px;
+    }
+  
+    .bg-animation {
+      display: block;
+      width: 100%;
+    }
+  
+    .row {
+      box-shadow: unset !important;
+    }
+  }
+
+}

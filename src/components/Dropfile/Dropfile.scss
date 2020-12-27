@@ -1,0 +1,50 @@
+.dropzone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 13px;
+}
+
+.MuiDropzonePreviewList-image {
+  max-width: unset !important;
+}
+
+.MuiDropzoneArea-root {
+  background-color: transparent !important;
+}
+
+.MuiGrid-spacing-xs-8 {
+  width: calc(100% + 64px) !important;
+  margin: unset !important;
+  margin-left: 15px !important;
+  margin-bottom: 15px !important;
+}
+
+.MuiGrid-spacing-xs-8 > .MuiGrid-item {
+  padding: unset !important;
+  padding-top: 32px !important;
+}
+
+.MuiDropzonePreviewList-removeButton {
+  top: -14px !important;
+  right: -8px !important;
+}
+
+@media (max-width: 768px) {
+  .MuiDropzoneArea-textContainer {
+    .MuiTypography-h5 {
+      font-size: 19px;
+    }
+  }
+
+  .MuiDropzonePreviewList-removeButton {
+    opacity: 1 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .MuiDropzonePreviewList-removeButton {
+    top: -14px !important;
+    right: -101px !important;
+  }
+}
