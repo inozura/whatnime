@@ -1,17 +1,18 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 
+import Logo from "../../assets/png/Logo.png";
 import "./Navbar.scss";
 
 export default function Navbar() {
   return (
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container">
-        <Link class="navbar-brand" to="/">
-          Navbar
-        </Link>
+        <NavLink className="navbar-brand" to="/">
+          <img src={Logo} width="59" height="59" alt="" loading="lazy" />
+        </NavLink>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNav"
@@ -19,24 +20,19 @@ export default function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-md-auto">
-            <li class="nav-item active">
-              <Link to="/" class="nav-link">
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ml-md-auto">
+            <li className="nav-item active">
+              <NavLink to="/" className="nav-link">
                 Home
-              </Link>
+              </NavLink>
             </li>
-            <li class="nav-item">
-              <Link to="/about" class="nav-link">
+            <li className="nav-item">
+              <NavLink to="/about" class="nav-link">
                 About
-              </Link>
-            </li>
-            <li class="nav-item">
-              <Link to="/" class="nav-link">
-                Pricing
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>

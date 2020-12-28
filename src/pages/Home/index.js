@@ -12,7 +12,7 @@ import "./Home.scss";
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Home";
+    document.title = "Whatnime";
   });
 
   return (

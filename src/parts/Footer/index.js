@@ -87,7 +87,9 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-        <p className="mt-3 copyright text-center">© 2020 Whatnime</p>
+        <p className="mt-3 copyright text-center">
+          © 2020 Whatnime | Code & Design by @inozura
+        </p>
       </div>
     </footer>
   );
