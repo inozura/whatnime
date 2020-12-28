@@ -218,11 +218,8 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Disagree
-              </Button>
               <Button onClick={handleClose} color="primary" autoFocus>
-                Agree
+                Ok
               </Button>
             </DialogActions>
           </div>
