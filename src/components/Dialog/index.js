@@ -7,7 +7,7 @@ import Rating from '@material-ui/lab/Rating';
 import Typography from '@material-ui/core/Typography';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
+import Fade from 'react-reveal/Fade'
 
 import "./Dialog.scss";
 
@@ -148,7 +148,6 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         ) : (
           <div className="dialog-content">
             <DialogContent>
-              <DialogContentText id="alert-dialog-description">
                 <div>
                   <div className="row">
                     <div className="col-md-6">
@@ -159,23 +158,30 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
                     <div className="col-md-6">
                       <div className="card card-desc">
                         <div className="card-body">
-                          <Typography variant="subtitle1">{dataFetched.data.data.Media.title.romaji}</Typography>
-                          <Rating readOnly max={5} defaultValue={0} value={dataFetched.data.data.Media.averageScore / 20} name="rating-anime" />
-                          <div className="genre-wrapper">
-                            {dataFetched.data.data.Media.genres.map((genre, index) => {
-                              return (<span key={index}>{genre}, </span>)
-                            })}
-                          </div>
-                          <Typography variant="body2">Season    : {dataFetched.data.data.Media.seasonYear} {dataFetched.data.data.Media.season}</Typography>
-                          <Typography variant="body2">Source    : {dataFetched.data.data.Media.source}</Typography>
-                          <Typography variant="body2">Format    : {dataFetched.data.data.Media.format}</Typography>
-                          <Typography variant="body2">Episodes  : {dataFetched.data.data.Media.episodes}</Typography>
+                          <Fade top duration={1100}>
+                            <Typography variant="h6">{dataFetched.data.data.Media.title.romaji}</Typography>
+                          </Fade>
+                          <Fade left duration={950}>
+                            <Rating readOnly max={5} defaultValue={0} value={dataFetched.data.data.Media.averageScore / 20} name="rating-anime" />
+                          </Fade>
+                          <Fade right duration={950}>
+                            <div className="genre-wrapper">
+                              {dataFetched.data.data.Media.genres.map((genre, index) => {
+                                return (<span key={index}>{genre}, </span>)
+                              })}
+                            </div>
+                          </Fade>
+                          <Fade bottom duration={990}>
+                            <Typography variant="body2">Season    : {dataFetched.data.data.Media.seasonYear} {dataFetched.data.data.Media.season}</Typography>
+                            <Typography variant="body2">Source    : {dataFetched.data.data.Media.source}</Typography>
+                            <Typography variant="body2">Format    : {dataFetched.data.data.Media.format}</Typography>
+                            <Typography variant="body2">Episodes  : {dataFetched.data.data.Media.episodes}</Typography>
+                          </Fade>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary" autoFocus>
