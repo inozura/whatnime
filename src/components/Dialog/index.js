@@ -3,11 +3,11 @@ import propTypes from "prop-types";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import Rating from '@material-ui/lab/Rating';
-import Typography from '@material-ui/core/Typography';
+import Rating from "@material-ui/lab/Rating";
+import Typography from "@material-ui/core/Typography";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
-import Fade from 'react-reveal/Fade'
+import Fade from "react-reveal/Fade";
 
 import "./Dialog.scss";
 
@@ -56,7 +56,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
                     genres
                   }
                 }`,
-              variables: {id: result.anilist_id},
+              variables: { id: result.anilist_id },
             }),
           })
             .then((res2) => {
@@ -109,7 +109,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
                       genres
                     }
                   }`,
-                variables: {id: result.anilist_id},
+                variables: { id: result.anilist_id },
               }),
             }).then((res2) => {
               // console.log("res2", res2);
@@ -118,7 +118,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
             });
           })
           .catch((err) => {
-            console.log(err)
+            console.log(err);
           });
       fetchData();
     }
@@ -148,40 +148,65 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         ) : (
           <div className="dialog-content">
             <DialogContent>
-                <div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="player-wrapper">
-                        <img className="cover-img" src={dataFetched.data.data.Media.coverImage.large} alt="coverIMG"/>
-                      </div>
+              <div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <div className="player-wrapper">
+                      <img
+                        className="cover-img"
+                        src={dataFetched.data.data.Media.coverImage.large}
+                        alt="coverIMG"
+                      />
                     </div>
-                    <div className="col-md-6">
-                      <div className="card card-desc">
-                        <div className="card-body">
-                          <Fade top duration={1100}>
-                            <Typography variant="h6">{dataFetched.data.data.Media.title.romaji}</Typography>
-                          </Fade>
-                          <Fade left duration={950}>
-                            <Rating readOnly max={5} defaultValue={0} value={dataFetched.data.data.Media.averageScore / 20} name="rating-anime" />
-                          </Fade>
-                          <Fade right duration={950}>
-                            <div className="genre-wrapper">
-                              {dataFetched.data.data.Media.genres.map((genre, index) => {
-                                return (<span key={index}>{genre}, </span>)
-                              })}
-                            </div>
-                          </Fade>
-                          <Fade bottom duration={990}>
-                            <Typography variant="body2">Season    : {dataFetched.data.data.Media.seasonYear} {dataFetched.data.data.Media.season}</Typography>
-                            <Typography variant="body2">Source    : {dataFetched.data.data.Media.source}</Typography>
-                            <Typography variant="body2">Format    : {dataFetched.data.data.Media.format}</Typography>
-                            <Typography variant="body2">Episodes  : {dataFetched.data.data.Media.episodes}</Typography>
-                          </Fade>
-                        </div>
+                  </div>
+                  <div className="col-md-6">
+                    <div className="card card-desc">
+                      <div className="card-body">
+                        <Fade top duration={1100}>
+                          <Typography variant="h6">
+                            {dataFetched.data.data.Media.title.romaji}
+                          </Typography>
+                        </Fade>
+                        <Fade left duration={950}>
+                          <Rating
+                            readOnly
+                            max={5}
+                            defaultValue={0}
+                            value={
+                              dataFetched.data.data.Media.averageScore / 20
+                            }
+                            name="rating-anime"
+                          />
+                        </Fade>
+                        <Fade right duration={950}>
+                          <div className="genre-wrapper">
+                            {dataFetched.data.data.Media.genres.map(
+                              (genre, index) => {
+                                return <span key={index}>{genre}, </span>;
+                              }
+                            )}
+                          </div>
+                        </Fade>
+                        <Fade bottom duration={990}>
+                          <Typography variant="body2">
+                            Season : {dataFetched.data.data.Media.seasonYear}{" "}
+                            {dataFetched.data.data.Media.season}
+                          </Typography>
+                          <Typography variant="body2">
+                            Source : {dataFetched.data.data.Media.source}
+                          </Typography>
+                          <Typography variant="body2">
+                            Format : {dataFetched.data.data.Media.format}
+                          </Typography>
+                          <Typography variant="body2">
+                            Episodes : {dataFetched.data.data.Media.episodes}
+                          </Typography>
+                        </Fade>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary" autoFocus>
