@@ -26,7 +26,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         await axios({
           url: `https://trace.moe/api/search?url=${data}`,
         }).then(async (res) => {
-          console.log("res1", res);
+          // console.log("res1", res);
           const result = res.data.docs[0];
           await axios({
             url: `https://graphql.anilist.co`,
@@ -60,7 +60,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
             }),
           })
             .then((res2) => {
-              console.log("res2", res2);
+              // console.log("res2", res2);
               setDataFetched(res2);
               setIsLoading(false);
             })
@@ -79,7 +79,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
           data: { image: data },
         })
           .then(async (res) => {
-            console.log("res1", res);
+            // console.log("res1", res);
             const result = res.data.docs[0];
             await axios({
               url: `https://graphql.anilist.co`,
@@ -112,7 +112,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
                 variables: {id: result.anilist_id},
               }),
             }).then((res2) => {
-              console.log("res2", res2);
+              // console.log("res2", res2);
               setDataFetched(res2);
               setIsLoading(false);
             });
