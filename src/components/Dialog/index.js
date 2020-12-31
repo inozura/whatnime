@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
 import axios from "axios";
-import ReactPlayer from "react-player";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
+import Rating from '@material-ui/lab/Rating';
+import Typography from '@material-ui/core/Typography';
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 
-import ConverterSecond from "../../utils/SecondConverter";
 import "./Dialog.scss";
 
 export default function AlertDialog({ data, showDialog, isUrl }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [videoFetched, setVideoFetched] = useState([]);
   const [dataFetched, setDataFetched] = useState([]);
 
   const handleClose = () => {
@@ -29,55 +27,46 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
           url: `https://trace.moe/api/search?url=${data}`,
         }).then(async (res) => {
           console.log("res1", res);
-          setDataFetched(res.data.docs[0]);
           const result = res.data.docs[0];
-          console.log(encodeURIComponent(result.filename));
           await axios({
-            url: `https://media.trace.moe/video/${
-              result.anilist_id
-            }/${encodeURIComponent(result.filename)}?t=${result.at}&token=${
-              result.tokenthumb
-            }`,
+            url: `https://graphql.anilist.co`,
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Accept: "application/json",
             },
+            data: JSON.stringify({
+              query: `query ($id: Int) {
+                  Media (id: $id, type: ANIME) { 
+                    id
+                    title {
+                      romaji
+                      english
+                      native
+                    }
+                    season
+                    format
+                    seasonYear
+                    source
+                    coverImage {
+                      large
+                    }
+                    averageScore
+                    episodes
+                    genres
+                  }
+                }`,
+              variables: {id: result.anilist_id},
+            }),
           })
             .then((res2) => {
               console.log("res2", res2);
-              setVideoFetched(res2);
+              setDataFetched(res2);
               setIsLoading(false);
             })
             .catch((err) => {
               // Jika error atau tidak ditemukan
               console.log(err);
-              const fetchData = async () =>
-                await axios({
-                  url: `https://trace.moe/api/search?url=${data}`,
-                }).then(async (res) => {
-                  console.log("res1", res);
-                  setDataFetched(res.data.docs[1]);
-                  const result = res.data.docs[1];
-                  console.log(encodeURIComponent(result.filename));
-                  await axios({
-                    url: `https://media.trace.moe/video/${
-                      result.anilist_id
-                    }/${encodeURIComponent(result.filename)}?t=${
-                      result.at
-                    }&token=${result.tokenthumb}`,
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  })
-                    .then((res2) => {
-                      console.log("res2", res2);
-                      setVideoFetched(res2);
-                      setIsLoading(false);
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
-                });
-              fetchData();
             });
         });
       fetchData();
@@ -91,53 +80,45 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         })
           .then(async (res) => {
             console.log("res1", res);
-            setDataFetched(res.data.docs[0]);
             const result = res.data.docs[0];
-            console.log(encodeURIComponent(result.filename));
             await axios({
-              url: `https://media.trace.moe/video/${
-                result.anilist_id
-              }/${encodeURIComponent(result.filename)}?t=${result.at}&token=${
-                result.tokenthumb
-              }`,
-              headers: { "Content-Type": "application/json" },
+              url: `https://graphql.anilist.co`,
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              data: JSON.stringify({
+                query: `query ($id: Int) {
+                    Media (id: $id, type: ANIME) { 
+                      id
+                      title {
+                        romaji
+                        english
+                        native
+                      }
+                      season
+                      format
+                      seasonYear
+                      source
+                      coverImage {
+                        large
+                      }
+                      averageScore
+                      episodes
+                      genres
+                    }
+                  }`,
+                variables: {id: result.anilist_id},
+              }),
             }).then((res2) => {
               console.log("res2", res2);
-              setVideoFetched(res2);
+              setDataFetched(res2);
               setIsLoading(false);
             });
           })
           .catch((err) => {
-            // Jika error atau tidak ditemukan
-            console.log("error", err);
-            const fetchData = async () =>
-              await axios({
-                url: `https://trace.moe/api/search?url=${data}`,
-              }).then(async (res) => {
-                console.log("res1", res);
-                setDataFetched(res.data.docs[1]);
-                const result = res.data.docs[1];
-                console.log(encodeURIComponent(result.filename));
-                await axios({
-                  url: `https://media.trace.moe/video/${
-                    result.anilist_id
-                  }/${encodeURIComponent(result.filename)}?t=${
-                    result.at
-                  }&token=${result.tokenthumb}`,
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                })
-                  .then((res2) => {
-                    console.log("res2", res2);
-                    setVideoFetched(res2);
-                    setIsLoading(false);
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              });
-            fetchData();
+            console.log(err)
           });
       fetchData();
     }
@@ -152,7 +133,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        maxWidth="lg"
+        maxWidth="md"
       >
         {isLoading ? (
           <div className="loading">
@@ -165,53 +146,32 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
             <p>Loading ...</p>
           </div>
         ) : (
-          <div>
-            <DialogTitle id="alert-dialog-title">{"Predict"}</DialogTitle>
+          <div className="dialog-content">
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
                 <div>
                   <div className="row">
                     <div className="col-md-6">
                       <div className="player-wrapper">
-                        <ReactPlayer
-                          className="react-player"
-                          url={videoFetched.config.url}
-                          controls={true}
-                          width="100%"
-                          height="100%"
-                        />
+                        <img className="cover-img" src={dataFetched.data.data.Media.coverImage.large} alt="coverIMG"/>
                       </div>
                     </div>
                     <div className="col-md-6">
-                      <ul class="list-group list-group-horizontal-sm mt-2 mb-3 mb-md-4 mt-mb-1">
-                        <li class="list-group-item">
-                          {dataFetched.season === "Movie"
-                            ? "Movie Relese"
-                            : `Relese ${dataFetched.season}`}
-                        </li>
-                        <li class="list-group-item">
-                          {dataFetched.season === "Movie"
-                            ? "Eps 1"
-                            : `Eps ${dataFetched.episode}`}
-                        </li>
-                      </ul>
-                      <ul class="list-group">
-                        <li class="list-group-item active">
-                          <p className="text-right">Title</p>
-                          <span>
-                            {dataFetched.title_romaji} /{" "}
-                            {dataFetched.title_native}
-                          </span>
-                        </li>
-                        <li class="list-group-item">
-                          <p className="text-right">English Title</p>
-                          <span>{dataFetched.title_english}</span>
-                        </li>
-                        <li class="list-group-item">
-                          <p className="text-right">At</p>
-                          <span>{ConverterSecond(dataFetched.at)}</span>
-                        </li>
-                      </ul>
+                      <div className="card card-desc">
+                        <div className="card-body">
+                          <Typography variant="subtitle1">{dataFetched.data.data.Media.title.romaji}</Typography>
+                          <Rating readOnly max={5} defaultValue={0} value={dataFetched.data.data.Media.averageScore / 20} name="rating-anime" />
+                          <div className="genre-wrapper">
+                            {dataFetched.data.data.Media.genres.map((genre, index) => {
+                              return (<span key={index}>{genre}, </span>)
+                            })}
+                          </div>
+                          <Typography variant="body2">Season    : {dataFetched.data.data.Media.seasonYear} {dataFetched.data.data.Media.season}</Typography>
+                          <Typography variant="body2">Source    : {dataFetched.data.data.Media.source}</Typography>
+                          <Typography variant="body2">Format    : {dataFetched.data.data.Media.format}</Typography>
+                          <Typography variant="body2">Episodes  : {dataFetched.data.data.Media.episodes}</Typography>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

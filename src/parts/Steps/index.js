@@ -14,11 +14,11 @@ export default function Steps() {
         <div className="row justify-content-center align-items-center">
           <Fade bottom duration={1700}>
             <div>
-              <div class="card">
-                <img src={imgFile} class="card-img-top" alt="free" />
-                <div class="card-body">
-                  <h2 class="card-title text-center">Image File</h2>
-                  <p class="card-text">
+              <div className="card">
+                <img src={imgFile} className="card-img-top" alt="free" />
+                <div className="card-body">
+                  <h2 className="card-title text-center">Image File</h2>
+                  <p className="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>
@@ -28,11 +28,11 @@ export default function Steps() {
           </Fade>
           <Fade bottom duration={2300}>
             <div>
-              <div class="card">
-                <img src={urlLink} class="card-img-top" alt="free" />
-                <div class="card-body">
-                  <h2 class="card-title text-center">Url Link</h2>
-                  <p class="card-text">
+              <div className="card">
+                <img src={urlLink} className="card-img-top" alt="free" />
+                <div className="card-body">
+                  <h2 className="card-title text-center">Url Link</h2>
+                  <p className="card-text">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
                   </p>

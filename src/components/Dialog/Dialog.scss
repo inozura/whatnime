@@ -9,17 +9,54 @@
     width: 63%;
   }
 
-  .player-wrapper {
-    position: relative;
-    padding-top: 56.25% /* Player ratio: 100 / (1280 / 720) */
+}
+
+.dialog-content {
+  .MuiDialogContent-root {
+    padding: 19px 27px 1px 27px !important;
   }
+  .row {
+    padding: 20px;
+  }
+  .player-wrapper {
+    display: flex !important;
+    // justify-content: start !important;
+    align-items: center !important;
   
-  .react-player {
-    position: absolute;
-    top: 0;
-    left: 0;
+    .cover-img {
+      width: 250px;
+      margin-bottom: 9px;
+      border-radius: 7px;
+    }
+  }
+
+  .genre-wrapper {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .card-desc {
+    background-color: white !important;
+    box-shadow: 0 14px 30px rgba(103,132,187,.15),0 4px 4px rgba(103,132,187,.05);
+    border: unset !important;
+    min-width: 240px;
+    height: 100%;
+
+    .MuiRating-root {
+      display: flex !important;
+      cursor: default;
+    }
+
+    span {
+      font-size: 10px;
+    }
+
+    p {
+      margin-bottom: 7px !important;
+    }
   }
 }
+
 
 @media (max-width: 768px) {
   .loading {
@@ -27,6 +64,20 @@
 
     img.imgLoading {
       width: 61%;
+    }
+  }
+
+  .dialog-content {
+    .MuiDialogContent-root {
+      padding: 11px 15px 1px 15px !important;
+    }
+
+    .player-wrapper {
+      justify-content: center !important;
+
+      .cover-img {
+        width: 190px;
+      }
     }
   }
 }

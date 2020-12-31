@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import Logo from "../../assets/png/Logo.png";
 import "./Navbar.scss";
@@ -30,7 +30,7 @@ export default function Navbar() {
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/about" class="nav-link">
+              <NavLink to="/about" className="nav-link">
                 About
               </NavLink>
             </li>

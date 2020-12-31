@@ -1,4 +1,3 @@
-import { event } from "jquery";
 import React, { useState } from "react";
 
 import Dialog from "../../components/Dialog";
@@ -15,7 +14,7 @@ export default function Search() {
   return (
     <section className="search">
       <div className="bg-overlay"></div>
-      <div class="container">
+      <div className="container">
         <div className="row justify-content-center align-items-center">
           <input
             type="text"
@@ -23,7 +22,7 @@ export default function Search() {
             onChange={(e) => setUrlValue(e.target.value)}
             placeholder="Paste URL in Here"
           />
-          <input type="submit" value="Go" onClick={() => setLoadDialog(true)} />
+          <input type="submit" value="Go" onClick={() => setLoadDialog(true)} autoComplete="none" />
         </div>
       </div>
       {loadDialog ? <Dialog showDialog={showDialog} data={urlValue} /> : null}
