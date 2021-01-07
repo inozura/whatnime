@@ -13,6 +13,7 @@ import "./Home.scss";
 export default function Home() {
   useEffect(() => {
     document.title = "Whatnime";
+    window.scrollTo(0, 0);
   });
 
   return (

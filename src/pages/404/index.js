@@ -6,6 +6,7 @@ import "./404.scss";
 export default function NotFound() {
   useEffect(() => {
     document.title = "Not Found";
+    window.scrollTo(0, 0);
   });
 
   return (

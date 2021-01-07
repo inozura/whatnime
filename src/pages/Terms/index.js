@@ -9,6 +9,7 @@ import "./Terms.scss";
 export default function Privacy() {
   useEffect(() => {
     document.title = "Terms Condition";
+    window.scrollTo(0, 0);
   });
 
   return (

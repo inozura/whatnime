@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import propTypes from "prop-types";
+import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -14,9 +15,14 @@ import "./Dialog.scss";
 export default function AlertDialog({ data, showDialog, isUrl }) {
   const [isLoading, setIsLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState([]);
+  const [resData, setResData] = useState([]);
 
   const handleClose = () => {
     showDialog(false);
+  };
+
+  const handleDetail = () => {
+    <Redirect to={`/detail/${resData.mal_id}`} />;
   };
 
   useEffect(() => {
@@ -28,6 +34,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         }).then(async (res) => {
           // console.log("res1", res);
           const result = res.data.docs[0];
+          setResData(res.data.docs[0]);
           await axios({
             url: `https://graphql.anilist.co`,
             method: "POST",
@@ -210,7 +217,10 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose} color="primary" autoFocus>
-                Ok
+                Close
+              </Button>
+              <Button color="primary" autoFocus>
+                <Link to={`/detail/${resData.mal_id}`}>Detail</Link>
               </Button>
             </DialogActions>
           </div>

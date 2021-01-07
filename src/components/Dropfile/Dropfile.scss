@@ -44,7 +44,8 @@
 
 @media (max-width: 576px) {
   .MuiDropzonePreviewList-removeButton {
-    top: -14px !important;
-    right: -101px !important;
+    top: -1px !important;
+    right: unset !important;
+    left: 0 !important;
   }
 }

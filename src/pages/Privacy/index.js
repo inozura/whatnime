@@ -9,6 +9,7 @@ import "./Privacy.scss";
 export default function Privacy() {
   useEffect(() => {
     document.title = "Privacy Policy";
+    window.scrollTo(0, 0);
   });
 
   return (

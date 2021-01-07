@@ -8,6 +8,7 @@ import "./About.scss";
 export default function About() {
   useEffect(() => {
     document.title = "About";
+    window.scrollTo(0, 0);
   });
 
   return (
