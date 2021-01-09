@@ -3,6 +3,7 @@ section.steps {
 
   .card {
     margin-right: 30px;
+    height: 352px;
     border: unset !important;
     box-shadow: 0 14px 30px rgba(103,132,187,.15),0 4px 4px rgba(103,132,187,.05);
     justify-content: center;
@@ -25,6 +26,7 @@ section.steps {
     padding-top: 50px;
     text-align: center;
     .card {
+      height: auto;
       margin-right: unset !important;
       margin-bottom: 20px;
       padding: 10px;

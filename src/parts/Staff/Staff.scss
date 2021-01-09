@@ -1,0 +1,30 @@
+section.staff {
+  margin-bottom: 30px;
+  .card {
+    padding: 0 !important;
+    .profil-staff {
+      border-radius: 0.25rem 0 0 0.25rem;
+    }
+    .staff-name {
+      font-weight: 500;
+      font-size: 13px;
+      color: rgb(16, 23, 54);
+    }
+    .staff-role {
+      font-weight: 200;
+      font-size: 11px;
+      color: rgb(42, 50, 85);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  section.staff {
+    .staff-name {
+      font-size: 9.3px;
+    }
+    .staff-role {
+      font-size: 9px;
+    }
+  }
+}

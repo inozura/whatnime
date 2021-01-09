@@ -25,7 +25,7 @@ export default function router(props) {
           <Route path="/policy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/about" component={About} />
-          <Route path="/detail/:id" render={() => <Detail />} />
+          <Route path="/detail/:idmal/:idanilist" render={() => <Detail />} />
           <Route path="/detail">
             <Redirect to="/" />
           </Route>

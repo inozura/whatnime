@@ -19,8 +19,8 @@ export default function Steps() {
                 <div className="card-body">
                   <h2 className="card-title text-center">Image File</h2>
                   <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
+                    Use the image picture of the scene anime from your
+                    localstorage and upload it in here to seacrh anime
                   </p>
                 </div>
               </div>
@@ -33,8 +33,8 @@ export default function Steps() {
                 <div className="card-body">
                   <h2 className="card-title text-center">Url Link</h2>
                   <p className="card-text">
-                    Some quick example text to build on the card title and make
-                    up the bulk of the card's content.
+                    Use url link of image scene from other website like facebook
+                    or google to seacrh the anime
                   </p>
                 </div>
               </div>
