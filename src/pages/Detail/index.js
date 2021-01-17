@@ -33,7 +33,7 @@ export default function Detail() {
       })
         .then(async (res) => {
           setMalFetched(res);
-          console.log(res);
+          // console.log(res);
           document.title = `${res.data.title} - Whatnime`;
 
           await axios({
