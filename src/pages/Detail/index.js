@@ -33,7 +33,9 @@ export default function Detail() {
       })
         .then(async (res) => {
           setMalFetched(res);
-          // console.log(res);
+          console.log(res);
+          document.title = `${res.data.title} - Whatnime`;
+
           await axios({
             url: `https://graphql.anilist.co`,
             method: "POST",
@@ -105,6 +107,7 @@ export default function Detail() {
             setAnilistFetched(res2);
             // console.log(res2);
             setLoadingFetch(false);
+            window.scrollTo(0, 0);
           });
         })
         .catch((err) => console.log(err));
