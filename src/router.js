@@ -25,11 +25,12 @@ export default function router(props) {
           <Route path="/policy" component={Privacy} />
           <Route path="/terms" component={Terms} />
           <Route path="/about" component={About} />
-          <Route path="/detail/:idmal/:idanilist" render={() => <Detail />} />
+          <Route path="/detail/:idmal" render={() => <Detail />} />
           <Route path="/detail">
             <Redirect to="/" />
           </Route>
           <Route path="*" component={NotFound} />
+          <Route path="/404" component={NotFound} />
         </Switch>
       </Router>
     </React.Suspense>

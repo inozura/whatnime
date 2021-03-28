@@ -5,19 +5,19 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 
 import "./Staff.scss";
 
-export default function Staff({ staffFetched }) {
+export default function Staff({ data }) {
   return (
     <div>
       <section className="staff">
         <div className="container">
           <h4>Staff Production</h4>
           <div className="row">
-            {staffFetched.nodes.slice(0, 4).map((staff, index) => (
+            {data.map((staff, index) => (
               <div className="col-md-6 p-3" key={`${index}-card`}>
                 <div className="card">
                   <div className="d-flex flex-row">
                     <LazyLoadImage
-                      src={staff.image.large}
+                      src={staff.image_url}
                       alt={`${index}-img-staff`}
                       className="mr-2 profil-staff"
                       width="52"
@@ -25,10 +25,9 @@ export default function Staff({ staffFetched }) {
                       effect="blur"
                     />
                     <div className="d-flex flex-column justify-content-between pt-1 pb-1">
-                      <span className="staff-name">{staff.name.full}</span>
+                      <span className="staff-name">{staff.name}</span>
                       <span className="staff-role">
-                        {staff.staffMedia.edges[0] &&
-                          staff.staffMedia.edges[0].staffRole}
+                        {staff.positions && staff.positions[0]}
                       </span>
                     </div>
                   </div>

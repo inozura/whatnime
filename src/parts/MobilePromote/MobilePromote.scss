@@ -1,0 +1,36 @@
+section.mobile-promote {
+  padding: 90px 0 5px 0;
+  overflow: hidden;
+
+  .card.mobile-promotion {
+    box-shadow: 0 14px 30px rgba(103,132,187,.15),0 4px 4px rgba(103,132,187,.05);
+    border: unset !important;
+    overflow: hidden;
+    position: relative;
+
+    .img-icon {
+      bottom: 0;
+      width: 39%;
+    }
+
+    .main-title {
+      font-size: 29px;
+      font-weight: 500;
+    }
+
+    .wave-bg {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  @media(max-width: 768px) {
+    .main-title {
+      font-size: 11px !important;
+      font-weight: 100 !important;
+    }
+  }
+}

@@ -11,6 +11,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import Fade from "react-reveal/Fade";
 
 import "./Dialog.scss";
+import LoadingChara from "../../assets/gif/LoadingChara.gif";
 
 export default function AlertDialog({ data, showDialog, isUrl }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -142,9 +143,9 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
         {isLoading ? (
           <div className="loading">
             <img
-              src="https://media2.giphy.com/media/UWPUmGBxBKDeNfi6N6/giphy.gif"
+              src={LoadingChara}
               alt="imgLumine"
-              width="53%"
+              width="33%"
               className="imgLoading"
               effect="opacity"
             />
@@ -218,7 +219,7 @@ export default function AlertDialog({ data, showDialog, isUrl }) {
               </Button>
               <Button color="primary" autoFocus>
                 <Link
-                  to={`/detail/${resData.mal_id}/${resData.anilist_id}`}
+                  to={`/detail/${resData.mal_id}`}
                   className="btn btn-primary"
                 >
                   Detail

@@ -3,10 +3,11 @@
   justify-content: center;
   align-items: center;
   width: 400px;
+  height: 400px;
   flex-direction: column;
 
   img.imgLoading {
-    width: 63%;
+    width: 33%;
   }
 
 }
@@ -61,10 +62,11 @@
 
 @media (max-width: 768px) {
   .loading {
-    width: 290px;
+    width: 210px;
+    height: 290px;
 
     img.imgLoading {
-      width: 61%;
+      width: 31%;
     }
   }
 

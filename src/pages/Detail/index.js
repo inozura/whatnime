@@ -2,119 +2,60 @@ import React, { useEffect, useState } from "react";
 import { useParams, Redirect } from "react-router-dom";
 import ReactPlayer from "react-player/lazy";
 import StarIcon from "@material-ui/icons/Star";
-import axios from "axios";
 import Fade from "react-reveal/Fade";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+import LoadingChara from "../../assets/gif/LoadingChara.gif";
 import "./Detail.scss";
 import Character from "../../parts/Character";
 import Staff from "../../parts/Staff";
 import Footer from "../../parts/Footer";
 import Back from "../../components/ButtonBack";
 import Logo from "../../assets/png/Logo.png";
+import { getCharaList, getDetailAnime } from "../../model/jikanAPI";
+import SuzumiyaLogoSad from "../../assets/png/suzumiya-sad.png";
 
 export default function Detail() {
-  const [malFetched, setMalFetched] = useState();
-  const [loadingFetch, setLoadingFetch] = useState(true);
-  const [anilistFetched, setAnilistFetched] = useState([]);
+  const [malFetched, setMalFetched] = useState({});
+  const [dataStaff, setDataStaff] = useState();
+  const [dataChar, setDataChar] = useState();
+  const [loadingFetch, setLoadingFetch] = useState(false);
 
-  let { idmal, idanilist } = useParams();
+  let { idmal } = useParams();
 
   useEffect(() => {
+    setLoadingFetch(true);
     if (idmal === null) {
-      <Redirect to="/" />;
+      <Redirect to="/404" />;
     }
 
     const getData = async () => {
-      setLoadingFetch(true);
-      await axios({
-        url: `https://api.jikan.moe/v3/anime/${idmal}`,
-      })
-        .then(async (res) => {
-          setMalFetched(res);
-          // console.log(res);
-          document.title = `${res.data.title} - Whatnime`;
-
-          await axios({
-            url: `https://graphql.anilist.co`,
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            data: JSON.stringify({
-              query: `query ($id: Int) {
-                    Media (id: $id, type: ANIME) { 
-                      id
-                      bannerImage
-                      title {
-                        romaji
-                        english
-                        native
-                      }
-                      season
-                      trailer {
-                        site
-                        thumbnail
-                        id
-                      }
-                      genres
-                      description
-                      staff {
-                        nodes {
-                          name {
-                            full
-                          }
-                          image {
-                            large
-                          }
-                          language
-                          staffMedia {
-                            edges {
-                              staffRole
-                            }
-                          }
-                        }
-                      }
-                      characters {
-                        edges {
-                          role
-                          node {
-                            name {
-                              full
-                            }
-                            image {
-                              large
-                            }
-                          }
-                          voiceActors {
-                            name {
-                              full
-                            }
-                            language
-                            image {
-                              large
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }`,
-              variables: { id: idanilist },
-            }),
-          }).then((res2) => {
-            setAnilistFetched(res2);
-            // console.log(res2);
-            setLoadingFetch(false);
-            window.scrollTo(0, 0);
-          });
-        })
-        .catch((err) => console.log(err));
+      try {
+        setLoadingFetch(true);
+        const dataAnime = await getDetailAnime(idmal);
+        const dataChara = await getCharaList(idmal);
+        setMalFetched(dataAnime);
+        setDataChar(dataChara.characters);
+        setDataStaff(dataChara.staff);
+        document.title = `${dataAnime.title} - Whatnime`;
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoadingFetch(false);
+      }
     };
-    // get data
+
     getData();
-  }, [idmal, idanilist]);
+
+    return () => {
+      setDataChar([]);
+      setDataStaff([]);
+      setLoadingFetch(false);
+      setMalFetched([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="detail-page">
@@ -122,9 +63,9 @@ export default function Detail() {
         <div className="loading-detail">
           <div className="d-flex justify-content-center w-100">
             <img
-              src="https://media2.giphy.com/media/UWPUmGBxBKDeNfi6N6/giphy.gif"
+              src={LoadingChara}
               alt="imgLumine"
-              width="13%"
+              width="7%"
               className="imgLoading"
             />
           </div>
@@ -163,7 +104,7 @@ export default function Detail() {
                   <div className="img-wrap">
                     <LazyLoadImage
                       className="img-cover"
-                      src={malFetched.data.image_url}
+                      src={malFetched.image_url}
                       alt="img-cover"
                       effect="black-and-white"
                     />
@@ -171,32 +112,36 @@ export default function Detail() {
                 </div>
                 <div className="col-8 col-md-9">
                   <Fade top duration={700}>
-                    <h3 className="title">{malFetched.data.title}</h3>
+                    <h3 className="title">{malFetched.title}</h3>
                   </Fade>
                   <div className="genres">
-                    {anilistFetched.data.data.Media.genres.map(
-                      (genre, index) => (
+                    {malFetched.genres &&
+                      malFetched.genres.map((genre, index) => (
                         <Fade left duration={900 + 0.2 * index} key={index}>
-                          <span>{genre}, </span>
+                          <span>
+                            {malFetched.genres.length === index + 1
+                              ? `${genre.name}`
+                              : `${genre.name}, `}
+                          </span>
                         </Fade>
-                      )
-                    )}
+                      ))}
                   </div>
                   <Fade bottom duration={900}>
                     <div className="card">
                       <div className="row align-items-center justify-content-center">
                         <div className="col-6 col-md-3 row align-items-center">
                           <StarIcon style={{ color: "#FFD700" }} />
-                          {malFetched.data.score}
+                          {malFetched.score ? malFetched.score : "  - "}
                         </div>
                         <div className="col-6 col-md-3">
-                          Ranked <b>#{malFetched.data.rank}</b>
+                          Ranked{" "}
+                          <b>#{malFetched.rank ? malFetched.rank : "  - "}</b>
                         </div>
                         <div className="col-6 col-md-3">
-                          Popularity <b>#{malFetched.data.popularity}</b>
+                          Popularity <b>#{malFetched.popularity}</b>
                         </div>
                         <div className="col-6 col-md-3">
-                          Members <b>#{malFetched.data.members}</b>
+                          Members <b>#{malFetched.members}</b>
                         </div>
                       </div>
                     </div>
@@ -209,19 +154,32 @@ export default function Detail() {
             <div className="wrap-desc">
               <div className="row">
                 <div className="col-md-6">
-                  <div className="player-wrapper">
-                    <ReactPlayer
-                      className="react-player"
-                      url={malFetched.data.trailer_url}
-                      controls={true}
-                      width="100%"
-                      height="100%"
-                    />
-                  </div>
+                  {malFetched.trailer_url ? (
+                    <div className="player-wrapper">
+                      <ReactPlayer
+                        className="react-player"
+                        url={malFetched.trailer_url}
+                        controls={true}
+                        width="100%"
+                        height="100%"
+                      />
+                    </div>
+                  ) : (
+                    <div className="no-video-wrapper">
+                      <LazyLoadImage
+                        src={SuzumiyaLogoSad}
+                        alt="no video"
+                        effect="blur"
+                        className="no-video"
+                        wrapperClassName="wrapper-ClassName"
+                      />
+                      <span>Sorry no video preview</span>
+                    </div>
+                  )}
                 </div>
                 <div className="col-md-6 p-4 p-md-3">
                   <p className="desc-title">Synopsis</p>
-                  <p className="desc-sm">{malFetched.data.synopsis}</p>
+                  <p className="desc-sm">{malFetched.synopsis}</p>
                 </div>
               </div>
             </div>
@@ -236,18 +194,18 @@ export default function Detail() {
                         <div className="container">
                           <div className="row align-items-center">
                             <StarIcon style={{ color: "#FFD700" }} />
-                            {malFetched.data.score}
+                            {malFetched.score}
                           </div>
                         </div>
                       </div>
                       <div className="col-6 col-md-3 p-1">
-                        Ranked <b>#{malFetched.data.rank}</b>
+                        Ranked <b>#{malFetched.rank}</b>
                       </div>
                       <div className="col-6 col-md-3 p-1">
-                        Popularity <b>#{malFetched.data.popularity}</b>
+                        Popularity <b>#{malFetched.popularity}</b>
                       </div>
                       <div className="col-6 col-md-3 p-1">
-                        Members <b>#{malFetched.data.members}</b>
+                        Members <b>#{malFetched.members}</b>
                       </div>
                     </div>
                   </div>
@@ -263,29 +221,30 @@ export default function Detail() {
                   <div className="row pb-3 pt-3">
                     <div className="col-md-4">
                       <p>
-                        Status :{" "}
-                        {malFetched.data.airing ? "Ongoing" : "Finished"}
+                        Status : {malFetched.airing ? "Ongoing" : "Finished"}
                       </p>
-                      <p>Rating : {malFetched.data.rating}</p>
-                      <p>Source : {malFetched.data.source}</p>
-                      <p>Total episodes : {malFetched.data.episodes}</p>
-                      <p>Duration : {malFetched.data.duration}</p>
+                      <p>Rating : {malFetched.rating}</p>
+                      <p>Source : {malFetched.source}</p>
+                      <p>Total episodes : {malFetched.episodes}</p>
+                      <p>Duration : {malFetched.duration}</p>
                       <p>
                         Opening :{" "}
-                        {malFetched.data.opening_themes[0] &&
-                          malFetched.data.opening_themes[0]}
+                        {malFetched.opening_themes &&
+                          malFetched.opening_themes[0]}
                       </p>
                     </div>
                     <div className="col-md-4">
-                      <p>English Title : {malFetched.data.title_english}</p>
-                      <p>Native Title : {malFetched.data.title_japanese}</p>
-                      <p>Type : {malFetched.data.type}</p>
+                      <p>English Title : {malFetched.title_english}</p>
+                      <p>Native Title : {malFetched.title_japanese}</p>
+                      <p>Type : {malFetched.type}</p>
                       <p>
                         Studio :{" "}
-                        {malFetched.data.studios[0] &&
-                          malFetched.data.studios[0].name}
+                        {malFetched.studios !== undefined &&
+                        malFetched.studios.length > 0
+                          ? malFetched.studios[0].name
+                          : "-"}
                       </p>
-                      <p>Broadcast : {malFetched.data.broadcast}</p>
+                      <p>Broadcast : {malFetched.broadcast}</p>
                     </div>
                   </div>
                   <LazyLoadImage
@@ -298,8 +257,16 @@ export default function Detail() {
               </Fade>
             </div>
           </section>
-          <Character char={anilistFetched.data.data.Media.characters} />
-          <Staff staffFetched={anilistFetched.data.data.Media.staff} />
+          {dataChar ? (
+            <Character data={dataChar.slice(0, 8)} />
+          ) : (
+            "No Characters"
+          )}
+          {dataStaff ? (
+            <Staff data={dataStaff ? dataStaff.slice(0, 4) : dataStaff} />
+          ) : (
+            "No Staff"
+          )}
           <Footer />
         </div>
       )}
