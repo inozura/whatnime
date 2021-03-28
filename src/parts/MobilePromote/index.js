@@ -27,7 +27,7 @@ export const MobilePromote = () => {
                 <Button
                   type="link"
                   className="btn-primary btn btn-md"
-                  href="/Downloads/Whatnime-V1.0.0-main.apk"
+                  href="https://drive.google.com/file/d/1Ss8E328FSr4C63PcGGrQqymKP-2wUqc8/view?usp=sharing"
                   isExternal
                 >
                   Download
