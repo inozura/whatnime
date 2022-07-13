@@ -1,8 +1,8 @@
 # Whatnime
-
 The fans website for search anime with image from a scene and will be generate the detail.
 
 ## Available Live Preview
+<p align="center"><img src="/Whatnime.png"></p>
 
 Available live preview with netlify host [Whatnime](https://whatnime.netlify.app)
 
